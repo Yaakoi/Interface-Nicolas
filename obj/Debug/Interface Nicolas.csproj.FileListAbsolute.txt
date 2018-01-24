@@ -17,7 +17,6 @@ C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interfa
 C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\bin\Debug\fr\Pic.DAL.LibraryLoader.resources.dll
 C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\obj\Debug\Interface_Nicolas.Form1.resources
 C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\obj\Debug\Interface Nicolas.csproj.GenerateResource.Cache
-C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\bin\Debug\F_0900.dll
 C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\bin\Debug\Pic.Plugin.Host.dll
 C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\bin\Debug\Pic.Plugin.Host.pdb
 C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\bin\Debug\DbLinq.Sqlite.dll
