@@ -16,20 +16,16 @@ using System.IO;
 
 namespace Interface_Nicolas
 {
-    public partial class Form1 : Form
+    public partial class View : Form
     {
         
-        public Form1()
+        public View()
         {
             InitializeComponent();
             //LoadTreeview();
         }    
 
-        public void LoadComponent(Pic.Plugin.Component comp)
-        {
-            pluginViewCtrl1.SearchMethod = new ComponentSearchDirectory(Path.Combine(Path.GetTempPath(), "Library"));
-            pluginViewCtrl1.Component = comp;
-        }
+        
 
         /*private void LoadTreeview()
         {
