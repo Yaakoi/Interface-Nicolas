@@ -13,15 +13,14 @@ namespace Interface_Nicolas
     class LoadComponents
     {
         componentList compList = new componentList();
-        PluginViewCtrl pluginViewCtrl = new PluginViewCtrl();
-        string directoryPath = @"C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\CompDownloader\PackageList.xml"
+        string directoryPath = @"C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\CompDownloader";
         string compPath;
 
         public void LoadListComponent()
         {
 
             //Set the list of components
-            XmlTextReader xmlr = new XmlTextReader(directoryPath);
+            XmlTextReader xmlr = new XmlTextReader(directoryPath + @"\PackageList.xml");
             while (xmlr.Read())
             {
                 if (xmlr.NodeType == XmlNodeType.Element)
@@ -56,7 +55,6 @@ namespace Interface_Nicolas
             ComponentLoader componentLoader = new ComponentLoader();
             componentLoader.SearchMethod = searchMethod;
             Component comp = componentLoader.LoadComponent(compPath);
-            pluginViewCtrl.SearchMethod = searchMethod;
             view.LoadComponent(comp);
 
         }
