@@ -24,27 +24,25 @@ namespace Interface_Nicolas
         public View()
         {
             InitializeComponent();
-            ComponentListView();
+            //ComponentListView();
 
 
             ListViewItem LVItem = new ListViewItem();
-            
-            
-
-
-            
             
             //LoadTreeview();
         }
 
 
+        public void LoadComponent(Pic.Plugin.Component comp)
+        {
+           pluginViewCtrl1.Component = comp;
+        }
+
         private void ComponentListView()
         {
 
             XmlTextReader xmlr = new XmlTextReader(@"C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\CompDownloader\PackageList.xml");
-
             
-
             // Set the view to show details.
             listView1.View = System.Windows.Forms.View.Details;
             // Select the item and subitems when selection is made.
@@ -58,10 +56,9 @@ namespace Interface_Nicolas
 
 
             
-            
+            //fill the list of items with component from xml file
             ListViewItem[] listItem = new ListViewItem[469];
             
-
             int i = 0;
             while (xmlr.Read())
             {

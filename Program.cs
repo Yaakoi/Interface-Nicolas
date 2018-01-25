@@ -24,11 +24,12 @@ namespace Interface_Nicolas
         static void Main(string[] args)
         {
 
+            View View = new View();
             LoadComponents loadComp = new LoadComponents();
             loadComp.LoadListComponent();
-            View form1 = new View();
-           
-            //Application.Run(form1);
+            loadComp.PluginLoadComponent(View);
+                      
+            Application.Run(View);
 
             Console.ReadLine();
         }
