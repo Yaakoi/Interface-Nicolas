@@ -13,6 +13,8 @@ using Pic.Plugin.ViewCtrl;
 using Pic.DAL.SQLite;
 using Pic.Plugin;
 using System.IO;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Interface_Nicolas
 {
@@ -22,10 +24,71 @@ namespace Interface_Nicolas
         public View()
         {
             InitializeComponent();
-            //LoadTreeview();
-        }    
+            ComponentListView();
 
-        
+
+            ListViewItem LVItem = new ListViewItem();
+            
+            
+
+
+            
+            
+            //LoadTreeview();
+        }
+
+
+        private void ComponentListView()
+        {
+
+            XmlTextReader xmlr = new XmlTextReader(@"C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\CompDownloader\PackageList.xml");
+
+            
+
+            // Set the view to show details.
+            listView1.View = System.Windows.Forms.View.Details;
+            // Select the item and subitems when selection is made.
+            listView1.FullRowSelect = true;
+            // Display grid lines.
+            listView1.GridLines = true;
+            // Sort the items in the list in ascending order.
+            listView1.Sorting = SortOrder.Ascending;
+
+            // Create three items and three sets of subitems for each item.
+
+
+            
+            
+            ListViewItem[] listItem = new ListViewItem[469];
+            
+
+            int i = 0;
+            while (xmlr.Read())
+            {
+                if (xmlr.NodeType == XmlNodeType.Element)
+                {
+                    if (xmlr.Name == "components")
+                    {
+                        listItem[i] = new ListViewItem(xmlr.GetAttribute("name"));
+                         
+                        Console.WriteLine(xmlr.GetAttribute("name"));
+                        i++;
+                    }
+                }
+                
+            }
+
+
+            // Create columns for the items and subitems.
+            // Width of -2 indicates auto-size.
+            listView1.Columns.Add("FEFCO", -2, HorizontalAlignment.Left);
+            
+
+            //Add the items to the ListView.
+            listView1.Items.AddRange(listItem);
+
+
+        }
 
         /*private void LoadTreeview()
         {
@@ -56,10 +119,9 @@ namespace Interface_Nicolas
 
         }
 
-       
-
-
-
-        
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
