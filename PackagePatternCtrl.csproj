@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,42 +35,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Pic.DAL">
-      <HintPath>..\..\..\..\PLMPackLib-master\PLMPackLib-master\Pic.DAL\bin\Debug\Pic.DAL.dll</HintPath>
+    <Reference Include="Pic.Factory2D, Version=8.0.19.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PLMPackLib-master\PLMPack-master\Sources\Librairies\Pic.Plugin.Host\bin\x86\Release\Pic.Factory2D.dll</HintPath>
     </Reference>
-    <Reference Include="Pic.DAL.LibraryLoader">
-      <HintPath>..\..\..\..\PLMPackLib-master\PLMPackLib-master\Pic.DAL.LibrairyLoader\obj\Debug\Pic.DAL.LibraryLoader.dll</HintPath>
+    <Reference Include="Pic.Plugin.Host, Version=8.0.19.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PLMPackLib-master\PLMPack-master\Sources\Librairies\Pic.Plugin.Host\bin\x86\Release\Pic.Plugin.Host.dll</HintPath>
     </Reference>
-    <Reference Include="Pic.Factory2D">
-      <HintPath>..\..\..\..\PLMPackLib-master\PLMPackLib-master\Pic.Factory2D\obj\x86\Debug\Pic.Factory2D.dll</HintPath>
+    <Reference Include="Pic.Plugin.PluginInterface, Version=8.0.19.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PLMPackLib-master\PLMPack-master\Sources\Librairies\Pic.Plugin.ViewCtrl\bin\x86\Debug\Pic.Plugin.PluginInterface.dll</HintPath>
     </Reference>
-    <Reference Include="Pic.Factory2D.Control">
-      <HintPath>..\..\..\..\PLMPackLib-master\PLMPackLib-master\Pic.Factory2D.Control\obj\Debug\Pic.Factory2D.Control.dll</HintPath>
-    </Reference>
-    <Reference Include="Pic.Plugin.Generator">
-      <HintPath>..\..\..\..\PLMPackLib-master\PLMPackLib-master\Pic.Plugin.Generator\obj\Debug\Pic.Plugin.Generator.dll</HintPath>
-    </Reference>
-    <Reference Include="Pic.Plugin.GeneratorCtrl">
-      <HintPath>..\..\..\..\PLMPackLib-master\PLMPackLib-master\Pic.Plugin.GeneratorCtrl1\obj\Debug\Pic.Plugin.GeneratorCtrl.dll</HintPath>
-    </Reference>
-    <Reference Include="Pic.Plugin.Host">
-      <HintPath>..\..\..\..\PLMPackLib-master\PLMPackLib-master\Pic.Plugin.Host\bin\Debug\Pic.Plugin.Host.dll</HintPath>
-    </Reference>
-    <Reference Include="Pic.Plugin.PluginInterface">
-      <HintPath>..\..\..\..\PLMPackLib-master\PLMPackLib-master\Pic.Plugin.PluginInterface\bin\Debug\Pic.Plugin.PluginInterface.dll</HintPath>
-    </Reference>
-    <Reference Include="Pic.Plugin.ViewCtrl">
-      <HintPath>..\..\..\..\PLMPackLib-master\PLMPackLib-master\Pic.Plugin.ViewCtrl\obj\Debug\Pic.Plugin.ViewCtrl.dll</HintPath>
-    </Reference>
-    <Reference Include="Sharp3D.Math">
-      <HintPath>..\..\..\..\PLMPackLib-master\PLMPackLib-master\Sharp3D.Math\bin\Debug\Sharp3D.Math.dll</HintPath>
+    <Reference Include="Pic.Plugin.ViewCtrl, Version=8.0.19.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PLMPackLib-master\PLMPack-master\Sources\Librairies\Pic.Plugin.ViewCtrl\bin\x86\Debug\Pic.Plugin.ViewCtrl.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -80,9 +64,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="TreeDim.UserControls">
-      <HintPath>..\..\..\..\PLMPackLib-master\PLMPackLib-master\TreeDim.UserControls\obj\Debug\TreeDim.UserControls.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LoadComponents.cs" />
@@ -109,6 +90,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\NuGet.Build.Tasks.Pack.4.4.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('packages\NuGet.Build.Tasks.Pack.4.4.0\build\NuGet.Build.Tasks.Pack.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Ce projet fait référence à des packages NuGet qui sont manquants sur cet ordinateur. Utilisez l'option de restauration des packages NuGet pour les télécharger. Pour plus d'informations, consultez http://go.microsoft.com/fwlink/?LinkID=322105. Le fichier manquant est : {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\NuGet.Build.Tasks.Pack.4.4.0\build\NuGet.Build.Tasks.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\NuGet.Build.Tasks.Pack.4.4.0\build\NuGet.Build.Tasks.Pack.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using Pic.Factory2D.Control;
-using Pic.Plugin.ViewCtrl;
-using Pic.DAL.SQLite;
 using Pic.Plugin;
-using System.IO;
+
 using System.Xml;
-using System.Xml.Linq;
+
+
 
 namespace Interface_Nicolas
 {
@@ -25,15 +22,16 @@ namespace Interface_Nicolas
         {
             InitializeComponent();
             //ComponentListView();
+            
+            
 
-
-            ListViewItem LVItem = new ListViewItem();
+            
             
             //LoadTreeview();
         }
 
 
-        public void LoadComponent(Pic.Plugin.Component comp)
+        public void LoadComponent(Component comp)
         {
            pluginViewCtrl1.Component = comp;
         }
@@ -54,26 +52,22 @@ namespace Interface_Nicolas
 
             // Create three items and three sets of subitems for each item.
 
+            LoadComponents loadComp = new LoadComponents();
+            componentList compList = new componentList();
+            List<componentListComponents> compListComp = compList.components;
 
-            
             //fill the list of items with component from xml file
             ListViewItem[] listItem = new ListViewItem[469];
-            
             int i = 0;
-            while (xmlr.Read())
+            foreach (componentListComponents comp in compListComp)
             {
-                if (xmlr.NodeType == XmlNodeType.Element)
-                {
-                    if (xmlr.Name == "components")
-                    {
-                        listItem[i] = new ListViewItem(xmlr.GetAttribute("name"));
-                         
-                        Console.WriteLine(xmlr.GetAttribute("name"));
-                        i++;
-                    }
-                }
-                
+                listItem[i] = new ListViewItem(comp.name);
+                i++;
             }
+            
+
+            
+            
 
 
             // Create columns for the items and subitems.

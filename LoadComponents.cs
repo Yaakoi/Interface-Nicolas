@@ -1,26 +1,24 @@
-﻿using Pic.Plugin;
+﻿#region Using directives
+using Pic.Plugin;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
-
-using Pic.Plugin.ViewCtrl;
+using System.IO;
+using System.Windows.Forms;
+#endregion
 
 namespace Interface_Nicolas
 {
     class LoadComponents
     {
-        componentList compList = new componentList();
-        string directoryPath = @"C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\CompDownloader";
-        string compPath;
+        #region Data members
+        private componentList compList = new componentList();
+        string directoryPath = Path.Combine(Application.StartupPath, @"CompDownloader\");
+        #endregion
 
         public void LoadListComponent()
         {
-
             //Set the list of components
-            XmlTextReader xmlr = new XmlTextReader(directoryPath + @"\PackageList.xml");
+            XmlTextReader xmlr = new XmlTextReader(directoryPath + @"PackageList.xml");
             while (xmlr.Read())
             {
                 if (xmlr.NodeType == XmlNodeType.Element)
@@ -40,23 +38,30 @@ namespace Interface_Nicolas
 
         public void PluginLoadComponent(View view)
         {
-            IComponentSearchMethod searchMethod = new ComponentSearchDirectory(directoryPath);
+          IComponentSearchMethod searchMethod = new ComponentSearchDirectory(directoryPath);
            
             //Find component
             string aRechercher = "F_0300";
             componentListComponents matchComp = compList.components.Find(x => x.name == aRechercher);
-
-            //Get filePath from Guid
             Guid compGuid = Guid.Parse(matchComp.guid);
-            compPath = searchMethod.GetFilePathFromGuid(compGuid);
-
+            
             
             //Load component in View
             ComponentLoader componentLoader = new ComponentLoader();
             componentLoader.SearchMethod = searchMethod;
-            Component comp = componentLoader.LoadComponent(compPath);
+            
+            Component comp = componentLoader.LoadComponent(searchMethod.GetAssemblyBytesFromGuid(compGuid));
             view.LoadComponent(comp);
+        }
 
+        public componentList GetComponentList
+        {
+            get{
+                return compList;
+            }
+            set{
+                compList = value;
+            }
         }
     }
 }
