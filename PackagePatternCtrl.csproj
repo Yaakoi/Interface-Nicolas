@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LoadComponents.cs" />
+    <Compile Include="LoadPlugin.cs" />
     <Compile Include="View.cs">
       <SubType>Form</SubType>
     </Compile>

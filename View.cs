@@ -17,15 +17,15 @@ namespace Interface_Nicolas
 {
     public partial class View : Form
     {
+        componentList _compList;
+        string _directoryPath;
         
-        public View()
+        public View(string directoryPath, componentList compList)
         {
             InitializeComponent();
-            //ComponentListView();
-            
-            
-
-            
+            _directoryPath = directoryPath;
+            _compList = compList;
+            ComponentListView();
             
             //LoadTreeview();
         }
@@ -36,7 +36,7 @@ namespace Interface_Nicolas
            pluginViewCtrl1.Component = comp;
         }
 
-        private void ComponentListView()
+        public void ComponentListView()
         {
 
             XmlTextReader xmlr = new XmlTextReader(@"C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\CompDownloader\PackageList.xml");
@@ -52,9 +52,9 @@ namespace Interface_Nicolas
 
             // Create three items and three sets of subitems for each item.
 
-            LoadComponents loadComp = new LoadComponents();
-            componentList compList = new componentList();
-            List<componentListComponents> compListComp = compList.components;
+
+            
+            List<componentListComponents> compListComp = _compList.components;
 
             //fill the list of items with component from xml file
             ListViewItem[] listItem = new ListViewItem[469];
@@ -65,11 +65,6 @@ namespace Interface_Nicolas
                 i++;
             }
             
-
-            
-            
-
-
             // Create columns for the items and subitems.
             // Width of -2 indicates auto-size.
             listView1.Columns.Add("FEFCO", -2, HorizontalAlignment.Left);
@@ -110,9 +105,11 @@ namespace Interface_Nicolas
 
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        private void listView1_DoubleClick(object sender, EventArgs e)
         {
-            
+            LoadPlugin loadPlug = new LoadPlugin(_directoryPath, _compList);
+            loadPlug.PluginLoadComponent(this, listView1.SelectedItems[0].Text);
+            //MessageBox.Show(listView1.SelectedItems[0].Text);
         }
     }
 }

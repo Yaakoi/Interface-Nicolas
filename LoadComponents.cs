@@ -15,7 +15,7 @@ namespace Interface_Nicolas
         string directoryPath = Path.Combine(Application.StartupPath, @"CompDownloader\");
         #endregion
 
-        public void LoadListComponent()
+        public componentList LoadListComponent()
         {
             //Set the list of components
             XmlTextReader xmlr = new XmlTextReader(directoryPath + @"PackageList.xml");
@@ -34,25 +34,10 @@ namespace Interface_Nicolas
                     }
                 }
             }
+            return compList;
         }
 
-        public void PluginLoadComponent(View view)
-        {
-          IComponentSearchMethod searchMethod = new ComponentSearchDirectory(directoryPath);
-           
-            //Find component
-            string aRechercher = "F_0300";
-            componentListComponents matchComp = compList.components.Find(x => x.name == aRechercher);
-            Guid compGuid = Guid.Parse(matchComp.guid);
-            
-            
-            //Load component in View
-            ComponentLoader componentLoader = new ComponentLoader();
-            componentLoader.SearchMethod = searchMethod;
-            
-            Component comp = componentLoader.LoadComponent(searchMethod.GetAssemblyBytesFromGuid(compGuid));
-            view.LoadComponent(comp);
-        }
+        
 
         public componentList GetComponentList
         {
