@@ -26,6 +26,8 @@ namespace Interface_Nicolas
         public byte[] GetAssemblyBytesFromGuid(Guid guid)
         {
             component cp = _listComponent.Find(c => Guid.Parse(c.guid) == guid);
+            if (null == cp)
+                throw new Exception($"Failed to retrieve component with guid = {guid}");
 
             string filePath = Path.Combine(LibraryPath, cp.fileName.Replace('-', '_'));
             FileInfo file = new FileInfo(filePath);

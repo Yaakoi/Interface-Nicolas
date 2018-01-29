@@ -34,7 +34,7 @@
             this.pluginViewCtrl.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pluginViewCtrl1
+            // pluginViewCtrl
             // 
             this.pluginViewCtrl.CloseButtonVisible = false;
             this.pluginViewCtrl.Component = null;
@@ -42,13 +42,13 @@
             this.pluginViewCtrl.HasDependancies = false;
             this.pluginViewCtrl.Localizer = null;
             this.pluginViewCtrl.Location = new System.Drawing.Point(0, 0);
-            this.pluginViewCtrl.Name = "pluginViewCtrl1";
+            this.pluginViewCtrl.Name = "pluginViewCtrl";
             // 
-            // pluginViewCtrl1.Panel1
+            // pluginViewCtrl.Panel1
             // 
             this.pluginViewCtrl.Panel1.Controls.Add(this.listView);
             // 
-            // pluginViewCtrl1.Panel2
+            // pluginViewCtrl.Panel2
             // 
             this.pluginViewCtrl.Panel2.AutoScroll = true;
             this.pluginViewCtrl.ParamValues = null;
@@ -64,26 +64,28 @@
             this.pluginViewCtrl.TabIndex = 0;
             this.pluginViewCtrl.ValidateButtonVisible = false;
             // 
-            // listView1
+            // listView
             // 
             this.listView.Location = new System.Drawing.Point(48, 12);
             this.listView.Name = "listView";
             this.listView.Size = new System.Drawing.Size(232, 229);
             this.listView.TabIndex = 1;
             this.listView.UseCompatibleStateImageBehavior = false;
+            this.listView.SelectedIndexChanged += new System.EventHandler(this.OnSelectedIndexChanged);
             // 
-            // View
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1300, 700);
             this.Controls.Add(this.pluginViewCtrl);
-            this.Name = "View";
+            this.Name = "MainForm";
             this.Text = "Interface";
             this.pluginViewCtrl.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pluginViewCtrl)).EndInit();
             this.pluginViewCtrl.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
         #endregion
 
