@@ -19,18 +19,13 @@ namespace Interface_Nicolas
             string directoryPath = Path.Combine(Application.StartupPath, @"CompDownloader\");
 
             //Initialise application
-            
             LoadComponents loadComp = new LoadComponents();
             componentList compList =  loadComp.LoadListComponent();
             
             LoadPlugin loadPlug = new LoadPlugin(directoryPath, compList);
-            View View = new View(directoryPath,compList);
-            loadPlug.PluginLoadComponent(View, "F_0900");
-
-
-
-
-           
+            View View = new View(directoryPath,compList, loadPlug);
+            loadPlug.PluginLoadComponent(View, "F_0201");
+            
             Application.Run(View);
 
             Console.ReadLine();

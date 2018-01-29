@@ -58,7 +58,7 @@
             this.pluginViewCtrl1.ShowAxes = true;
             this.pluginViewCtrl1.ShowCotationsAuto = true;
             this.pluginViewCtrl1.ShowCotationsCode = false;
-            this.pluginViewCtrl1.ShowSummary = true;
+            this.pluginViewCtrl1.ShowSummary = false;
             this.pluginViewCtrl1.Size = new System.Drawing.Size(1300, 700);
             this.pluginViewCtrl1.SplitterDistance = 1050;
             this.pluginViewCtrl1.SplitterWidth = 1;

@@ -19,12 +19,14 @@ namespace Interface_Nicolas
     {
         componentList _compList;
         string _directoryPath;
+        LoadPlugin _loadPlug;
         
-        public View(string directoryPath, componentList compList)
+        public View(string directoryPath, componentList compList, LoadPlugin loadPlug)
         {
             InitializeComponent();
             _directoryPath = directoryPath;
             _compList = compList;
+            _loadPlug = loadPlug;
             ComponentListView();
             
             //LoadTreeview();
@@ -34,12 +36,13 @@ namespace Interface_Nicolas
         public void LoadComponent(Component comp)
         {
            pluginViewCtrl1.Component = comp;
+           
         }
 
         public void ComponentListView()
         {
 
-            XmlTextReader xmlr = new XmlTextReader(@"C:\Users\nmoreau\Documents\Visual Studio 2015\Projects\Interface Nicolas\Interface Nicolas\CompDownloader\PackageList.xml");
+            
             
             // Set the view to show details.
             listView1.View = System.Windows.Forms.View.Details;
@@ -107,8 +110,10 @@ namespace Interface_Nicolas
 
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
-            LoadPlugin loadPlug = new LoadPlugin(_directoryPath, _compList);
-            loadPlug.PluginLoadComponent(this, listView1.SelectedItems[0].Text);
+            
+            _loadPlug.PluginLoadComponent(this, listView1.SelectedItems[0].Text);
+
+
             //MessageBox.Show(listView1.SelectedItems[0].Text);
         }
     }
