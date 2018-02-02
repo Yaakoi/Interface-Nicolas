@@ -1,34 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Windows.Forms;
+using log4net;
+using log4net.Config;
 
-using System.Windows.Forms;
-using System.IO;
+using System.Diagnostics;
 
 namespace Interface_Nicolas
 {
     class Program
     {
-        
         static void Main(string[] args)
         {
-            string directoryPath = Path.Combine(Application.StartupPath, @"CompDownloader\");
+            // set up a simple logging configuration
+            XmlConfigurator.Configure();
+            if (!LogManager.GetRepository().Configured)
+                Debug.Fail("Logging not configured!\n Press ignore to continue");
 
-            //Initialise application
-            LoadComponents loadComp = new LoadComponents();
-            componentList compList =  loadComp.LoadListComponent();
-            
-            LoadPlugin loadPlug = new LoadPlugin(directoryPath, compList);
-            View View = new View(directoryPath,compList, loadPlug);
-            loadPlug.PluginLoadComponent(View, "F_0201");
-            
-            Application.Run(View);
-
-            Console.ReadLine();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
         }
     }
 }

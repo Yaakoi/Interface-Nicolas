@@ -15,30 +15,43 @@ namespace Interface_Nicolas
     using System.ComponentModel;
     using System.Xml;
     using System.Collections.Generic;
-    
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2556.0")]
+
+    using System;
+    using System.Diagnostics;
+    using System.Xml.Serialization;
+    using System.Collections;
+    using System.Xml.Schema;
+    using System.ComponentModel;
+    using System.IO;
+    using System.Text;
+    using System.Xml;
+    using System.Collections.Generic;
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3006.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="/treeDiM/PLMPack/Components")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="/treeDiM/PLMPack/Components", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "/treeDiM/PLMPack/Components")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "/treeDiM/PLMPack/Components", IsNullable = false)]
     public partial class componentList
     {
-        
+
         #region Private fields
-        private List<componentListComponents> _components;
-        
+        private List<component> _components;
+
         private string _componentDirPath;
+
+        private static XmlSerializer serializer;
         #endregion
-        
+
         public componentList()
         {
-            this._components = new List<componentListComponents>();
+            this._components = new List<component>();
         }
-        
+
         [System.Xml.Serialization.XmlElementAttribute("components")]
-        public List<componentListComponents> components
+        public List<component> components
         {
             get
             {
@@ -49,7 +62,7 @@ namespace Interface_Nicolas
                 this._components = value;
             }
         }
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string ComponentDirPath
         {
@@ -62,37 +75,231 @@ namespace Interface_Nicolas
                 this._componentDirPath = value;
             }
         }
+
+        private static XmlSerializer Serializer
+        {
+            get
+            {
+                if ((serializer == null))
+                {
+                    serializer = new XmlSerializerFactory().CreateSerializer(typeof(componentList));
+                }
+                return serializer;
+            }
+        }
+
+        #region Serialize/Deserialize
+        /// <summary>
+        /// Serializes current componentList object into an XML string
+        /// </summary>
+        /// <returns>string XML value</returns>
+        public virtual string Serialize()
+        {
+            System.IO.StreamReader streamReader = null;
+            System.IO.MemoryStream memoryStream = null;
+            try
+            {
+                memoryStream = new System.IO.MemoryStream();
+                System.Xml.XmlWriterSettings xmlWriterSettings = new System.Xml.XmlWriterSettings();
+                System.Xml.XmlWriter xmlWriter = XmlWriter.Create(memoryStream, xmlWriterSettings);
+                Serializer.Serialize(xmlWriter, this);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                streamReader = new System.IO.StreamReader(memoryStream);
+                return streamReader.ReadToEnd();
+            }
+            finally
+            {
+                if ((streamReader != null))
+                {
+                    streamReader.Dispose();
+                }
+                if ((memoryStream != null))
+                {
+                    memoryStream.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes workflow markup into an componentList object
+        /// </summary>
+        /// <param name="input">string workflow markup to deserialize</param>
+        /// <param name="obj">Output componentList object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool Deserialize(string input, out componentList obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(componentList);
+            try
+            {
+                obj = Deserialize(input);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool Deserialize(string input, out componentList obj)
+        {
+            System.Exception exception = null;
+            return Deserialize(input, out obj, out exception);
+        }
+
+        public static componentList Deserialize(string input)
+        {
+            System.IO.StringReader stringReader = null;
+            try
+            {
+                stringReader = new System.IO.StringReader(input);
+                return ((componentList)(Serializer.Deserialize(XmlReader.Create(stringReader))));
+            }
+            finally
+            {
+                if ((stringReader != null))
+                {
+                    stringReader.Dispose();
+                }
+            }
+        }
+
+        public static componentList Deserialize(System.IO.Stream s)
+        {
+            return ((componentList)(Serializer.Deserialize(s)));
+        }
+        #endregion
+
+        /// <summary>
+        /// Serializes current componentList object into file
+        /// </summary>
+        /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="exception">output Exception value if failed</param>
+        /// <returns>true if can serialize and save into file; otherwise, false</returns>
+        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        {
+            exception = null;
+            try
+            {
+                SaveToFile(fileName);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                exception = e;
+                return false;
+            }
+        }
+
+        public virtual void SaveToFile(string fileName)
+        {
+            System.IO.StreamWriter streamWriter = null;
+            try
+            {
+                string xmlString = Serialize();
+                System.IO.FileInfo xmlFile = new System.IO.FileInfo(fileName);
+                streamWriter = xmlFile.CreateText();
+                streamWriter.WriteLine(xmlString);
+                streamWriter.Close();
+            }
+            finally
+            {
+                if ((streamWriter != null))
+                {
+                    streamWriter.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes xml markup from file into an componentList object
+        /// </summary>
+        /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="obj">Output componentList object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool LoadFromFile(string fileName, out componentList obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(componentList);
+            try
+            {
+                obj = LoadFromFile(fileName);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool LoadFromFile(string fileName, out componentList obj)
+        {
+            System.Exception exception = null;
+            return LoadFromFile(fileName, out obj, out exception);
+        }
+
+        public static componentList LoadFromFile(string fileName)
+        {
+            System.IO.FileStream file = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                file = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.Read);
+                sr = new System.IO.StreamReader(file);
+                string xmlString = sr.ReadToEnd();
+                sr.Close();
+                file.Close();
+                return Deserialize(xmlString);
+            }
+            finally
+            {
+                if ((file != null))
+                {
+                    file.Dispose();
+                }
+                if ((sr != null))
+                {
+                    sr.Dispose();
+                }
+            }
+        }
     }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2556.0")]
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3006.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="/treeDiM/PLMPack/Components")]
-    public partial class componentListComponents
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "/treeDiM/PLMPack/Components")]
+    public partial class component
     {
-        
+
         #region Private fields
         private List<parameter> _paramDefaults;
-        
+
         private List<componentListComponentsMajorationSet> _majorationSets;
-        
+
         private string _name;
-        
+
         private string _description;
-        
+
         private string _guid;
-        
+
         private string _fileName;
+
+        private static XmlSerializer serializer;
         #endregion
-        
-        public componentListComponents()
+
+        public component()
         {
             this._majorationSets = new List<componentListComponentsMajorationSet>();
             this._paramDefaults = new List<parameter>();
         }
-        
-        [System.Xml.Serialization.XmlArrayItemAttribute("p", IsNullable=false)]
+
+        [System.Xml.Serialization.XmlArrayItemAttribute("p", IsNullable = false)]
         public List<parameter> paramDefaults
         {
             get
@@ -104,8 +311,8 @@ namespace Interface_Nicolas
                 this._paramDefaults = value;
             }
         }
-        
-        [System.Xml.Serialization.XmlArrayItemAttribute("majorationSet", IsNullable=false)]
+
+        [System.Xml.Serialization.XmlArrayItemAttribute("majorationSet", IsNullable = false)]
         public List<componentListComponentsMajorationSet> majorationSets
         {
             get
@@ -117,7 +324,7 @@ namespace Interface_Nicolas
                 this._majorationSets = value;
             }
         }
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string name
         {
@@ -130,7 +337,7 @@ namespace Interface_Nicolas
                 this._name = value;
             }
         }
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string description
         {
@@ -143,7 +350,7 @@ namespace Interface_Nicolas
                 this._description = value;
             }
         }
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string guid
         {
@@ -156,7 +363,7 @@ namespace Interface_Nicolas
                 this._guid = value;
             }
         }
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string fileName
         {
@@ -169,24 +376,218 @@ namespace Interface_Nicolas
                 this._fileName = value;
             }
         }
+
+        private static XmlSerializer Serializer
+        {
+            get
+            {
+                if ((serializer == null))
+                {
+                    serializer = new XmlSerializerFactory().CreateSerializer(typeof(component));
+                }
+                return serializer;
+            }
+        }
+
+        #region Serialize/Deserialize
+        /// <summary>
+        /// Serializes current componentListComponents object into an XML string
+        /// </summary>
+        /// <returns>string XML value</returns>
+        public virtual string Serialize()
+        {
+            System.IO.StreamReader streamReader = null;
+            System.IO.MemoryStream memoryStream = null;
+            try
+            {
+                memoryStream = new System.IO.MemoryStream();
+                System.Xml.XmlWriterSettings xmlWriterSettings = new System.Xml.XmlWriterSettings();
+                System.Xml.XmlWriter xmlWriter = XmlWriter.Create(memoryStream, xmlWriterSettings);
+                Serializer.Serialize(xmlWriter, this);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                streamReader = new System.IO.StreamReader(memoryStream);
+                return streamReader.ReadToEnd();
+            }
+            finally
+            {
+                if ((streamReader != null))
+                {
+                    streamReader.Dispose();
+                }
+                if ((memoryStream != null))
+                {
+                    memoryStream.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes workflow markup into an componentListComponents object
+        /// </summary>
+        /// <param name="input">string workflow markup to deserialize</param>
+        /// <param name="obj">Output componentListComponents object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool Deserialize(string input, out component obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(component);
+            try
+            {
+                obj = Deserialize(input);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool Deserialize(string input, out component obj)
+        {
+            System.Exception exception = null;
+            return Deserialize(input, out obj, out exception);
+        }
+
+        public static component Deserialize(string input)
+        {
+            System.IO.StringReader stringReader = null;
+            try
+            {
+                stringReader = new System.IO.StringReader(input);
+                return ((component)(Serializer.Deserialize(XmlReader.Create(stringReader))));
+            }
+            finally
+            {
+                if ((stringReader != null))
+                {
+                    stringReader.Dispose();
+                }
+            }
+        }
+
+        public static component Deserialize(System.IO.Stream s)
+        {
+            return ((component)(Serializer.Deserialize(s)));
+        }
+        #endregion
+
+        /// <summary>
+        /// Serializes current componentListComponents object into file
+        /// </summary>
+        /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="exception">output Exception value if failed</param>
+        /// <returns>true if can serialize and save into file; otherwise, false</returns>
+        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        {
+            exception = null;
+            try
+            {
+                SaveToFile(fileName);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                exception = e;
+                return false;
+            }
+        }
+
+        public virtual void SaveToFile(string fileName)
+        {
+            System.IO.StreamWriter streamWriter = null;
+            try
+            {
+                string xmlString = Serialize();
+                System.IO.FileInfo xmlFile = new System.IO.FileInfo(fileName);
+                streamWriter = xmlFile.CreateText();
+                streamWriter.WriteLine(xmlString);
+                streamWriter.Close();
+            }
+            finally
+            {
+                if ((streamWriter != null))
+                {
+                    streamWriter.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes xml markup from file into an componentListComponents object
+        /// </summary>
+        /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="obj">Output componentListComponents object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool LoadFromFile(string fileName, out component obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(component);
+            try
+            {
+                obj = LoadFromFile(fileName);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool LoadFromFile(string fileName, out component obj)
+        {
+            System.Exception exception = null;
+            return LoadFromFile(fileName, out obj, out exception);
+        }
+
+        public static component LoadFromFile(string fileName)
+        {
+            System.IO.FileStream file = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                file = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.Read);
+                sr = new System.IO.StreamReader(file);
+                string xmlString = sr.ReadToEnd();
+                sr.Close();
+                file.Close();
+                return Deserialize(xmlString);
+            }
+            finally
+            {
+                if ((file != null))
+                {
+                    file.Dispose();
+                }
+                if ((sr != null))
+                {
+                    sr.Dispose();
+                }
+            }
+        }
     }
-    
+
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(parameterMulti))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(parameterBool))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(parameterInt))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(parameterDouble))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3006.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="/treeDiM/PLMPack/Components")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "/treeDiM/PLMPack/Components")]
     public abstract partial class parameter
     {
-        
+
         #region Private fields
         private string _name;
+
+        private static XmlSerializer serializer;
         #endregion
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string name
         {
@@ -199,22 +600,216 @@ namespace Interface_Nicolas
                 this._name = value;
             }
         }
+
+        private static XmlSerializer Serializer
+        {
+            get
+            {
+                if ((serializer == null))
+                {
+                    serializer = new XmlSerializerFactory().CreateSerializer(typeof(parameter));
+                }
+                return serializer;
+            }
+        }
+
+        #region Serialize/Deserialize
+        /// <summary>
+        /// Serializes current parameter object into an XML string
+        /// </summary>
+        /// <returns>string XML value</returns>
+        public virtual string Serialize()
+        {
+            System.IO.StreamReader streamReader = null;
+            System.IO.MemoryStream memoryStream = null;
+            try
+            {
+                memoryStream = new System.IO.MemoryStream();
+                System.Xml.XmlWriterSettings xmlWriterSettings = new System.Xml.XmlWriterSettings();
+                System.Xml.XmlWriter xmlWriter = XmlWriter.Create(memoryStream, xmlWriterSettings);
+                Serializer.Serialize(xmlWriter, this);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                streamReader = new System.IO.StreamReader(memoryStream);
+                return streamReader.ReadToEnd();
+            }
+            finally
+            {
+                if ((streamReader != null))
+                {
+                    streamReader.Dispose();
+                }
+                if ((memoryStream != null))
+                {
+                    memoryStream.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes workflow markup into an parameter object
+        /// </summary>
+        /// <param name="input">string workflow markup to deserialize</param>
+        /// <param name="obj">Output parameter object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool Deserialize(string input, out parameter obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(parameter);
+            try
+            {
+                obj = Deserialize(input);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool Deserialize(string input, out parameter obj)
+        {
+            System.Exception exception = null;
+            return Deserialize(input, out obj, out exception);
+        }
+
+        public static parameter Deserialize(string input)
+        {
+            System.IO.StringReader stringReader = null;
+            try
+            {
+                stringReader = new System.IO.StringReader(input);
+                return ((parameter)(Serializer.Deserialize(XmlReader.Create(stringReader))));
+            }
+            finally
+            {
+                if ((stringReader != null))
+                {
+                    stringReader.Dispose();
+                }
+            }
+        }
+
+        public static parameter Deserialize(System.IO.Stream s)
+        {
+            return ((parameter)(Serializer.Deserialize(s)));
+        }
+        #endregion
+
+        /// <summary>
+        /// Serializes current parameter object into file
+        /// </summary>
+        /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="exception">output Exception value if failed</param>
+        /// <returns>true if can serialize and save into file; otherwise, false</returns>
+        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        {
+            exception = null;
+            try
+            {
+                SaveToFile(fileName);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                exception = e;
+                return false;
+            }
+        }
+
+        public virtual void SaveToFile(string fileName)
+        {
+            System.IO.StreamWriter streamWriter = null;
+            try
+            {
+                string xmlString = Serialize();
+                System.IO.FileInfo xmlFile = new System.IO.FileInfo(fileName);
+                streamWriter = xmlFile.CreateText();
+                streamWriter.WriteLine(xmlString);
+                streamWriter.Close();
+            }
+            finally
+            {
+                if ((streamWriter != null))
+                {
+                    streamWriter.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes xml markup from file into an parameter object
+        /// </summary>
+        /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="obj">Output parameter object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool LoadFromFile(string fileName, out parameter obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(parameter);
+            try
+            {
+                obj = LoadFromFile(fileName);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool LoadFromFile(string fileName, out parameter obj)
+        {
+            System.Exception exception = null;
+            return LoadFromFile(fileName, out obj, out exception);
+        }
+
+        public static parameter LoadFromFile(string fileName)
+        {
+            System.IO.FileStream file = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                file = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.Read);
+                sr = new System.IO.StreamReader(file);
+                string xmlString = sr.ReadToEnd();
+                sr.Close();
+                file.Close();
+                return Deserialize(xmlString);
+            }
+            finally
+            {
+                if ((file != null))
+                {
+                    file.Dispose();
+                }
+                if ((sr != null))
+                {
+                    sr.Dispose();
+                }
+            }
+        }
     }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2556.0")]
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3006.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="/treeDiM/PLMPack/Components")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "/treeDiM/PLMPack/Components")]
     public partial class parameterMulti : parameter
     {
-        
+
         #region Private fields
         private int _value;
-        
+
         private string _options;
+
+        private static XmlSerializer serializer;
         #endregion
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public int value
         {
@@ -227,7 +822,7 @@ namespace Interface_Nicolas
                 this._value = value;
             }
         }
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string options
         {
@@ -240,20 +835,214 @@ namespace Interface_Nicolas
                 this._options = value;
             }
         }
+
+        private static XmlSerializer Serializer
+        {
+            get
+            {
+                if ((serializer == null))
+                {
+                    serializer = new XmlSerializerFactory().CreateSerializer(typeof(parameterMulti));
+                }
+                return serializer;
+            }
+        }
+
+        #region Serialize/Deserialize
+        /// <summary>
+        /// Serializes current parameterMulti object into an XML string
+        /// </summary>
+        /// <returns>string XML value</returns>
+        public virtual string Serialize()
+        {
+            System.IO.StreamReader streamReader = null;
+            System.IO.MemoryStream memoryStream = null;
+            try
+            {
+                memoryStream = new System.IO.MemoryStream();
+                System.Xml.XmlWriterSettings xmlWriterSettings = new System.Xml.XmlWriterSettings();
+                System.Xml.XmlWriter xmlWriter = XmlWriter.Create(memoryStream, xmlWriterSettings);
+                Serializer.Serialize(xmlWriter, this);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                streamReader = new System.IO.StreamReader(memoryStream);
+                return streamReader.ReadToEnd();
+            }
+            finally
+            {
+                if ((streamReader != null))
+                {
+                    streamReader.Dispose();
+                }
+                if ((memoryStream != null))
+                {
+                    memoryStream.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes workflow markup into an parameterMulti object
+        /// </summary>
+        /// <param name="input">string workflow markup to deserialize</param>
+        /// <param name="obj">Output parameterMulti object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool Deserialize(string input, out parameterMulti obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(parameterMulti);
+            try
+            {
+                obj = Deserialize(input);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool Deserialize(string input, out parameterMulti obj)
+        {
+            System.Exception exception = null;
+            return Deserialize(input, out obj, out exception);
+        }
+
+        public new static parameterMulti Deserialize(string input)
+        {
+            System.IO.StringReader stringReader = null;
+            try
+            {
+                stringReader = new System.IO.StringReader(input);
+                return ((parameterMulti)(Serializer.Deserialize(XmlReader.Create(stringReader))));
+            }
+            finally
+            {
+                if ((stringReader != null))
+                {
+                    stringReader.Dispose();
+                }
+            }
+        }
+
+        public static parameterMulti Deserialize(System.IO.Stream s)
+        {
+            return ((parameterMulti)(Serializer.Deserialize(s)));
+        }
+        #endregion
+
+        /// <summary>
+        /// Serializes current parameterMulti object into file
+        /// </summary>
+        /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="exception">output Exception value if failed</param>
+        /// <returns>true if can serialize and save into file; otherwise, false</returns>
+        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        {
+            exception = null;
+            try
+            {
+                SaveToFile(fileName);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                exception = e;
+                return false;
+            }
+        }
+
+        public virtual void SaveToFile(string fileName)
+        {
+            System.IO.StreamWriter streamWriter = null;
+            try
+            {
+                string xmlString = Serialize();
+                System.IO.FileInfo xmlFile = new System.IO.FileInfo(fileName);
+                streamWriter = xmlFile.CreateText();
+                streamWriter.WriteLine(xmlString);
+                streamWriter.Close();
+            }
+            finally
+            {
+                if ((streamWriter != null))
+                {
+                    streamWriter.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes xml markup from file into an parameterMulti object
+        /// </summary>
+        /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="obj">Output parameterMulti object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool LoadFromFile(string fileName, out parameterMulti obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(parameterMulti);
+            try
+            {
+                obj = LoadFromFile(fileName);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool LoadFromFile(string fileName, out parameterMulti obj)
+        {
+            System.Exception exception = null;
+            return LoadFromFile(fileName, out obj, out exception);
+        }
+
+        public new static parameterMulti LoadFromFile(string fileName)
+        {
+            System.IO.FileStream file = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                file = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.Read);
+                sr = new System.IO.StreamReader(file);
+                string xmlString = sr.ReadToEnd();
+                sr.Close();
+                file.Close();
+                return Deserialize(xmlString);
+            }
+            finally
+            {
+                if ((file != null))
+                {
+                    file.Dispose();
+                }
+                if ((sr != null))
+                {
+                    sr.Dispose();
+                }
+            }
+        }
     }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2556.0")]
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3006.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="/treeDiM/PLMPack/Components")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "/treeDiM/PLMPack/Components")]
     public partial class parameterBool : parameter
     {
-        
+
         #region Private fields
         private bool _value;
+
+        private static XmlSerializer serializer;
         #endregion
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public bool value
         {
@@ -266,20 +1055,214 @@ namespace Interface_Nicolas
                 this._value = value;
             }
         }
+
+        private static XmlSerializer Serializer
+        {
+            get
+            {
+                if ((serializer == null))
+                {
+                    serializer = new XmlSerializerFactory().CreateSerializer(typeof(parameterBool));
+                }
+                return serializer;
+            }
+        }
+
+        #region Serialize/Deserialize
+        /// <summary>
+        /// Serializes current parameterBool object into an XML string
+        /// </summary>
+        /// <returns>string XML value</returns>
+        public virtual string Serialize()
+        {
+            System.IO.StreamReader streamReader = null;
+            System.IO.MemoryStream memoryStream = null;
+            try
+            {
+                memoryStream = new System.IO.MemoryStream();
+                System.Xml.XmlWriterSettings xmlWriterSettings = new System.Xml.XmlWriterSettings();
+                System.Xml.XmlWriter xmlWriter = XmlWriter.Create(memoryStream, xmlWriterSettings);
+                Serializer.Serialize(xmlWriter, this);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                streamReader = new System.IO.StreamReader(memoryStream);
+                return streamReader.ReadToEnd();
+            }
+            finally
+            {
+                if ((streamReader != null))
+                {
+                    streamReader.Dispose();
+                }
+                if ((memoryStream != null))
+                {
+                    memoryStream.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes workflow markup into an parameterBool object
+        /// </summary>
+        /// <param name="input">string workflow markup to deserialize</param>
+        /// <param name="obj">Output parameterBool object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool Deserialize(string input, out parameterBool obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(parameterBool);
+            try
+            {
+                obj = Deserialize(input);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool Deserialize(string input, out parameterBool obj)
+        {
+            System.Exception exception = null;
+            return Deserialize(input, out obj, out exception);
+        }
+
+        public new static parameterBool Deserialize(string input)
+        {
+            System.IO.StringReader stringReader = null;
+            try
+            {
+                stringReader = new System.IO.StringReader(input);
+                return ((parameterBool)(Serializer.Deserialize(XmlReader.Create(stringReader))));
+            }
+            finally
+            {
+                if ((stringReader != null))
+                {
+                    stringReader.Dispose();
+                }
+            }
+        }
+
+        public static parameterBool Deserialize(System.IO.Stream s)
+        {
+            return ((parameterBool)(Serializer.Deserialize(s)));
+        }
+        #endregion
+
+        /// <summary>
+        /// Serializes current parameterBool object into file
+        /// </summary>
+        /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="exception">output Exception value if failed</param>
+        /// <returns>true if can serialize and save into file; otherwise, false</returns>
+        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        {
+            exception = null;
+            try
+            {
+                SaveToFile(fileName);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                exception = e;
+                return false;
+            }
+        }
+
+        public virtual void SaveToFile(string fileName)
+        {
+            System.IO.StreamWriter streamWriter = null;
+            try
+            {
+                string xmlString = Serialize();
+                System.IO.FileInfo xmlFile = new System.IO.FileInfo(fileName);
+                streamWriter = xmlFile.CreateText();
+                streamWriter.WriteLine(xmlString);
+                streamWriter.Close();
+            }
+            finally
+            {
+                if ((streamWriter != null))
+                {
+                    streamWriter.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes xml markup from file into an parameterBool object
+        /// </summary>
+        /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="obj">Output parameterBool object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool LoadFromFile(string fileName, out parameterBool obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(parameterBool);
+            try
+            {
+                obj = LoadFromFile(fileName);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool LoadFromFile(string fileName, out parameterBool obj)
+        {
+            System.Exception exception = null;
+            return LoadFromFile(fileName, out obj, out exception);
+        }
+
+        public new static parameterBool LoadFromFile(string fileName)
+        {
+            System.IO.FileStream file = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                file = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.Read);
+                sr = new System.IO.StreamReader(file);
+                string xmlString = sr.ReadToEnd();
+                sr.Close();
+                file.Close();
+                return Deserialize(xmlString);
+            }
+            finally
+            {
+                if ((file != null))
+                {
+                    file.Dispose();
+                }
+                if ((sr != null))
+                {
+                    sr.Dispose();
+                }
+            }
+        }
     }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2556.0")]
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3006.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="/treeDiM/PLMPack/Components")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "/treeDiM/PLMPack/Components")]
     public partial class parameterInt : parameter
     {
-        
+
         #region Private fields
         private int _value;
+
+        private static XmlSerializer serializer;
         #endregion
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public int value
         {
@@ -292,20 +1275,214 @@ namespace Interface_Nicolas
                 this._value = value;
             }
         }
+
+        private static XmlSerializer Serializer
+        {
+            get
+            {
+                if ((serializer == null))
+                {
+                    serializer = new XmlSerializerFactory().CreateSerializer(typeof(parameterInt));
+                }
+                return serializer;
+            }
+        }
+
+        #region Serialize/Deserialize
+        /// <summary>
+        /// Serializes current parameterInt object into an XML string
+        /// </summary>
+        /// <returns>string XML value</returns>
+        public virtual string Serialize()
+        {
+            System.IO.StreamReader streamReader = null;
+            System.IO.MemoryStream memoryStream = null;
+            try
+            {
+                memoryStream = new System.IO.MemoryStream();
+                System.Xml.XmlWriterSettings xmlWriterSettings = new System.Xml.XmlWriterSettings();
+                System.Xml.XmlWriter xmlWriter = XmlWriter.Create(memoryStream, xmlWriterSettings);
+                Serializer.Serialize(xmlWriter, this);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                streamReader = new System.IO.StreamReader(memoryStream);
+                return streamReader.ReadToEnd();
+            }
+            finally
+            {
+                if ((streamReader != null))
+                {
+                    streamReader.Dispose();
+                }
+                if ((memoryStream != null))
+                {
+                    memoryStream.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes workflow markup into an parameterInt object
+        /// </summary>
+        /// <param name="input">string workflow markup to deserialize</param>
+        /// <param name="obj">Output parameterInt object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool Deserialize(string input, out parameterInt obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(parameterInt);
+            try
+            {
+                obj = Deserialize(input);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool Deserialize(string input, out parameterInt obj)
+        {
+            System.Exception exception = null;
+            return Deserialize(input, out obj, out exception);
+        }
+
+        public new static parameterInt Deserialize(string input)
+        {
+            System.IO.StringReader stringReader = null;
+            try
+            {
+                stringReader = new System.IO.StringReader(input);
+                return ((parameterInt)(Serializer.Deserialize(XmlReader.Create(stringReader))));
+            }
+            finally
+            {
+                if ((stringReader != null))
+                {
+                    stringReader.Dispose();
+                }
+            }
+        }
+
+        public static parameterInt Deserialize(System.IO.Stream s)
+        {
+            return ((parameterInt)(Serializer.Deserialize(s)));
+        }
+        #endregion
+
+        /// <summary>
+        /// Serializes current parameterInt object into file
+        /// </summary>
+        /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="exception">output Exception value if failed</param>
+        /// <returns>true if can serialize and save into file; otherwise, false</returns>
+        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        {
+            exception = null;
+            try
+            {
+                SaveToFile(fileName);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                exception = e;
+                return false;
+            }
+        }
+
+        public virtual void SaveToFile(string fileName)
+        {
+            System.IO.StreamWriter streamWriter = null;
+            try
+            {
+                string xmlString = Serialize();
+                System.IO.FileInfo xmlFile = new System.IO.FileInfo(fileName);
+                streamWriter = xmlFile.CreateText();
+                streamWriter.WriteLine(xmlString);
+                streamWriter.Close();
+            }
+            finally
+            {
+                if ((streamWriter != null))
+                {
+                    streamWriter.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes xml markup from file into an parameterInt object
+        /// </summary>
+        /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="obj">Output parameterInt object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool LoadFromFile(string fileName, out parameterInt obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(parameterInt);
+            try
+            {
+                obj = LoadFromFile(fileName);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool LoadFromFile(string fileName, out parameterInt obj)
+        {
+            System.Exception exception = null;
+            return LoadFromFile(fileName, out obj, out exception);
+        }
+
+        public new static parameterInt LoadFromFile(string fileName)
+        {
+            System.IO.FileStream file = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                file = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.Read);
+                sr = new System.IO.StreamReader(file);
+                string xmlString = sr.ReadToEnd();
+                sr.Close();
+                file.Close();
+                return Deserialize(xmlString);
+            }
+            finally
+            {
+                if ((file != null))
+                {
+                    file.Dispose();
+                }
+                if ((sr != null))
+                {
+                    sr.Dispose();
+                }
+            }
+        }
     }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2556.0")]
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3006.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="/treeDiM/PLMPack/Components")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "/treeDiM/PLMPack/Components")]
     public partial class parameterDouble : parameter
     {
-        
+
         #region Private fields
         private double _value;
+
+        private static XmlSerializer serializer;
         #endregion
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public double value
         {
@@ -318,42 +1495,236 @@ namespace Interface_Nicolas
                 this._value = value;
             }
         }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2556.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="/treeDiM/PLMPack/Components")]
-    public partial class componentListComponentsMajorationSet
-    {
-        
-        #region Private fields
-        private List<parameter> _parameters;
-        
-        private string _name;
-        
-        private double _thickness;
-        #endregion
-        
-        public componentListComponentsMajorationSet()
-        {
-            this._parameters = new List<parameter>();
-        }
-        
-        [System.Xml.Serialization.XmlElementAttribute("parameters")]
-        public List<parameter> parameters
+
+        private static XmlSerializer Serializer
         {
             get
             {
-                return this._parameters;
+                if ((serializer == null))
+                {
+                    serializer = new XmlSerializerFactory().CreateSerializer(typeof(parameterDouble));
+                }
+                return serializer;
+            }
+        }
+
+        #region Serialize/Deserialize
+        /// <summary>
+        /// Serializes current parameterDouble object into an XML string
+        /// </summary>
+        /// <returns>string XML value</returns>
+        public virtual string Serialize()
+        {
+            System.IO.StreamReader streamReader = null;
+            System.IO.MemoryStream memoryStream = null;
+            try
+            {
+                memoryStream = new System.IO.MemoryStream();
+                System.Xml.XmlWriterSettings xmlWriterSettings = new System.Xml.XmlWriterSettings();
+                System.Xml.XmlWriter xmlWriter = XmlWriter.Create(memoryStream, xmlWriterSettings);
+                Serializer.Serialize(xmlWriter, this);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                streamReader = new System.IO.StreamReader(memoryStream);
+                return streamReader.ReadToEnd();
+            }
+            finally
+            {
+                if ((streamReader != null))
+                {
+                    streamReader.Dispose();
+                }
+                if ((memoryStream != null))
+                {
+                    memoryStream.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes workflow markup into an parameterDouble object
+        /// </summary>
+        /// <param name="input">string workflow markup to deserialize</param>
+        /// <param name="obj">Output parameterDouble object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool Deserialize(string input, out parameterDouble obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(parameterDouble);
+            try
+            {
+                obj = Deserialize(input);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool Deserialize(string input, out parameterDouble obj)
+        {
+            System.Exception exception = null;
+            return Deserialize(input, out obj, out exception);
+        }
+
+        public new static parameterDouble Deserialize(string input)
+        {
+            System.IO.StringReader stringReader = null;
+            try
+            {
+                stringReader = new System.IO.StringReader(input);
+                return ((parameterDouble)(Serializer.Deserialize(XmlReader.Create(stringReader))));
+            }
+            finally
+            {
+                if ((stringReader != null))
+                {
+                    stringReader.Dispose();
+                }
+            }
+        }
+
+        public static parameterDouble Deserialize(System.IO.Stream s)
+        {
+            return ((parameterDouble)(Serializer.Deserialize(s)));
+        }
+        #endregion
+
+        /// <summary>
+        /// Serializes current parameterDouble object into file
+        /// </summary>
+        /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="exception">output Exception value if failed</param>
+        /// <returns>true if can serialize and save into file; otherwise, false</returns>
+        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        {
+            exception = null;
+            try
+            {
+                SaveToFile(fileName);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                exception = e;
+                return false;
+            }
+        }
+
+        public virtual void SaveToFile(string fileName)
+        {
+            System.IO.StreamWriter streamWriter = null;
+            try
+            {
+                string xmlString = Serialize();
+                System.IO.FileInfo xmlFile = new System.IO.FileInfo(fileName);
+                streamWriter = xmlFile.CreateText();
+                streamWriter.WriteLine(xmlString);
+                streamWriter.Close();
+            }
+            finally
+            {
+                if ((streamWriter != null))
+                {
+                    streamWriter.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes xml markup from file into an parameterDouble object
+        /// </summary>
+        /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="obj">Output parameterDouble object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool LoadFromFile(string fileName, out parameterDouble obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(parameterDouble);
+            try
+            {
+                obj = LoadFromFile(fileName);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool LoadFromFile(string fileName, out parameterDouble obj)
+        {
+            System.Exception exception = null;
+            return LoadFromFile(fileName, out obj, out exception);
+        }
+
+        public new static parameterDouble LoadFromFile(string fileName)
+        {
+            System.IO.FileStream file = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                file = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.Read);
+                sr = new System.IO.StreamReader(file);
+                string xmlString = sr.ReadToEnd();
+                sr.Close();
+                file.Close();
+                return Deserialize(xmlString);
+            }
+            finally
+            {
+                if ((file != null))
+                {
+                    file.Dispose();
+                }
+                if ((sr != null))
+                {
+                    sr.Dispose();
+                }
+            }
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3006.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "/treeDiM/PLMPack/Components")]
+    public partial class componentListComponentsMajorationSet
+    {
+
+        #region Private fields
+        private List<parameter> _p;
+
+        private string _name;
+
+        private double _thickness;
+
+        private static XmlSerializer serializer;
+        #endregion
+
+        public componentListComponentsMajorationSet()
+        {
+            this._p = new List<parameter>();
+        }
+
+        [System.Xml.Serialization.XmlElementAttribute("p")]
+        public List<parameter> p
+        {
+            get
+            {
+                return this._p;
             }
             set
             {
-                this._parameters = value;
+                this._p = value;
             }
         }
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string name
         {
@@ -366,7 +1737,7 @@ namespace Interface_Nicolas
                 this._name = value;
             }
         }
-        
+
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public double thickness
         {
@@ -377,6 +1748,198 @@ namespace Interface_Nicolas
             set
             {
                 this._thickness = value;
+            }
+        }
+
+        private static XmlSerializer Serializer
+        {
+            get
+            {
+                if ((serializer == null))
+                {
+                    serializer = new XmlSerializerFactory().CreateSerializer(typeof(componentListComponentsMajorationSet));
+                }
+                return serializer;
+            }
+        }
+
+        #region Serialize/Deserialize
+        /// <summary>
+        /// Serializes current componentListComponentsMajorationSet object into an XML string
+        /// </summary>
+        /// <returns>string XML value</returns>
+        public virtual string Serialize()
+        {
+            System.IO.StreamReader streamReader = null;
+            System.IO.MemoryStream memoryStream = null;
+            try
+            {
+                memoryStream = new System.IO.MemoryStream();
+                System.Xml.XmlWriterSettings xmlWriterSettings = new System.Xml.XmlWriterSettings();
+                System.Xml.XmlWriter xmlWriter = XmlWriter.Create(memoryStream, xmlWriterSettings);
+                Serializer.Serialize(xmlWriter, this);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                streamReader = new System.IO.StreamReader(memoryStream);
+                return streamReader.ReadToEnd();
+            }
+            finally
+            {
+                if ((streamReader != null))
+                {
+                    streamReader.Dispose();
+                }
+                if ((memoryStream != null))
+                {
+                    memoryStream.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes workflow markup into an componentListComponentsMajorationSet object
+        /// </summary>
+        /// <param name="input">string workflow markup to deserialize</param>
+        /// <param name="obj">Output componentListComponentsMajorationSet object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool Deserialize(string input, out componentListComponentsMajorationSet obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(componentListComponentsMajorationSet);
+            try
+            {
+                obj = Deserialize(input);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool Deserialize(string input, out componentListComponentsMajorationSet obj)
+        {
+            System.Exception exception = null;
+            return Deserialize(input, out obj, out exception);
+        }
+
+        public static componentListComponentsMajorationSet Deserialize(string input)
+        {
+            System.IO.StringReader stringReader = null;
+            try
+            {
+                stringReader = new System.IO.StringReader(input);
+                return ((componentListComponentsMajorationSet)(Serializer.Deserialize(XmlReader.Create(stringReader))));
+            }
+            finally
+            {
+                if ((stringReader != null))
+                {
+                    stringReader.Dispose();
+                }
+            }
+        }
+
+        public static componentListComponentsMajorationSet Deserialize(System.IO.Stream s)
+        {
+            return ((componentListComponentsMajorationSet)(Serializer.Deserialize(s)));
+        }
+        #endregion
+
+        /// <summary>
+        /// Serializes current componentListComponentsMajorationSet object into file
+        /// </summary>
+        /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="exception">output Exception value if failed</param>
+        /// <returns>true if can serialize and save into file; otherwise, false</returns>
+        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        {
+            exception = null;
+            try
+            {
+                SaveToFile(fileName);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                exception = e;
+                return false;
+            }
+        }
+
+        public virtual void SaveToFile(string fileName)
+        {
+            System.IO.StreamWriter streamWriter = null;
+            try
+            {
+                string xmlString = Serialize();
+                System.IO.FileInfo xmlFile = new System.IO.FileInfo(fileName);
+                streamWriter = xmlFile.CreateText();
+                streamWriter.WriteLine(xmlString);
+                streamWriter.Close();
+            }
+            finally
+            {
+                if ((streamWriter != null))
+                {
+                    streamWriter.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes xml markup from file into an componentListComponentsMajorationSet object
+        /// </summary>
+        /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="obj">Output componentListComponentsMajorationSet object</param>
+        /// <param name="exception">output Exception value if deserialize failed</param>
+        /// <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        public static bool LoadFromFile(string fileName, out componentListComponentsMajorationSet obj, out System.Exception exception)
+        {
+            exception = null;
+            obj = default(componentListComponentsMajorationSet);
+            try
+            {
+                obj = LoadFromFile(fileName);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        public static bool LoadFromFile(string fileName, out componentListComponentsMajorationSet obj)
+        {
+            System.Exception exception = null;
+            return LoadFromFile(fileName, out obj, out exception);
+        }
+
+        public static componentListComponentsMajorationSet LoadFromFile(string fileName)
+        {
+            System.IO.FileStream file = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                file = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.Read);
+                sr = new System.IO.StreamReader(file);
+                string xmlString = sr.ReadToEnd();
+                sr.Close();
+                file.Close();
+                return Deserialize(xmlString);
+            }
+            finally
+            {
+                if ((file != null))
+                {
+                    file.Dispose();
+                }
+                if ((sr != null))
+                {
+                    sr.Dispose();
+                }
             }
         }
     }
