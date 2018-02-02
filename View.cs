@@ -116,5 +116,10 @@ namespace Interface_Nicolas
 
             //MessageBox.Show(listView1.SelectedItems[0].Text);
         }
+
+        private void paramètresdToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

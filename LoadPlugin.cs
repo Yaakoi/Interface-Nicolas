@@ -32,11 +32,8 @@ namespace Interface_Nicolas
                 componentLoader.SearchMethod = searchMethod;
 
                 Component comp = componentLoader.LoadComponent(searchMethod.GetAssemblyBytesFromGuid(compGuid));
-                ParameterStack pStack = new ParameterStack();
-                ParameterStack pStack1 = comp.BuildParameterStack(pStack);
-                Console.WriteLine("L = " + pStack1.GetDoubleParameterValue("L"));
-                Console.WriteLine("B = " + pStack1.GetDoubleParameterValue("B"));
-                Console.WriteLine("H = " + pStack1.GetDoubleParameterValue("H"));
+                
+                
                 view.LoadComponent(comp);
             }
         }

@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetProperties.cs" />
     <Compile Include="LoadComponents.cs" />
     <Compile Include="LoadPlugin.cs" />
     <Compile Include="View.cs">
