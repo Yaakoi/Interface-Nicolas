@@ -27,22 +27,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pluginViewCtrl = new Pic.Plugin.ViewCtrl.PluginViewCtrl();
-            this.listView = new System.Windows.Forms.ListView();
-            ((System.ComponentModel.ISupportInitialize)(this.pluginViewCtrl)).BeginInit();
-            this.pluginViewCtrl.Panel1.SuspendLayout();
-            this.pluginViewCtrl.SuspendLayout();
+            this.pluginViewCtrl1 = new Pic.Plugin.ViewCtrl.PluginViewCtrl();
+            this.listView1 = new System.Windows.Forms.ListView();
+            ((System.ComponentModel.ISupportInitialize)(this.pluginViewCtrl1)).BeginInit();
+            this.pluginViewCtrl1.Panel1.SuspendLayout();
+            this.pluginViewCtrl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pluginViewCtrl
             // 
-            this.pluginViewCtrl.CloseButtonVisible = false;
-            this.pluginViewCtrl.Component = null;
-            this.pluginViewCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pluginViewCtrl.HasDependancies = false;
-            this.pluginViewCtrl.Localizer = null;
-            this.pluginViewCtrl.Location = new System.Drawing.Point(0, 0);
-            this.pluginViewCtrl.Name = "pluginViewCtrl";
+            this.pluginViewCtrl1.CloseButtonVisible = false;
+            this.pluginViewCtrl1.Component = null;
+            this.pluginViewCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pluginViewCtrl1.HasDependancies = false;
+            this.pluginViewCtrl1.Localizer = null;
+            this.pluginViewCtrl1.Location = new System.Drawing.Point(0, 0);
+            this.pluginViewCtrl1.Name = "pluginViewCtrl1";
             // 
             // pluginViewCtrl.Panel1
             // 
@@ -50,46 +50,48 @@
             // 
             // pluginViewCtrl.Panel2
             // 
-            this.pluginViewCtrl.Panel2.AutoScroll = true;
-            this.pluginViewCtrl.ParamValues = null;
-            this.pluginViewCtrl.ReflectionX = false;
-            this.pluginViewCtrl.ReflectionY = false;
-            this.pluginViewCtrl.ShowAxes = true;
-            this.pluginViewCtrl.ShowCotationsAuto = true;
-            this.pluginViewCtrl.ShowCotationsCode = false;
-            this.pluginViewCtrl.ShowSummary = true;
-            this.pluginViewCtrl.Size = new System.Drawing.Size(1300, 700);
-            this.pluginViewCtrl.SplitterDistance = 1050;
-            this.pluginViewCtrl.SplitterWidth = 1;
-            this.pluginViewCtrl.TabIndex = 0;
-            this.pluginViewCtrl.ValidateButtonVisible = false;
+            this.pluginViewCtrl1.Panel2.AutoScroll = true;
+            this.pluginViewCtrl1.ParamValues = null;
+            this.pluginViewCtrl1.ReflectionX = false;
+            this.pluginViewCtrl1.ReflectionY = false;
+            this.pluginViewCtrl1.ShowAxes = true;
+            this.pluginViewCtrl1.ShowCotationsAuto = true;
+            this.pluginViewCtrl1.ShowCotationsCode = false;
+            this.pluginViewCtrl1.ShowSummary = true;
+            this.pluginViewCtrl1.Size = new System.Drawing.Size(1300, 700);
+            this.pluginViewCtrl1.SplitterDistance = 1050;
+            this.pluginViewCtrl1.SplitterWidth = 1;
+            this.pluginViewCtrl1.TabIndex = 0;
+            this.pluginViewCtrl1.ValidateButtonVisible = false;
             // 
             // listView
             // 
-            this.listView.Location = new System.Drawing.Point(48, 12);
-            this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(232, 229);
-            this.listView.TabIndex = 1;
-            this.listView.UseCompatibleStateImageBehavior = false;
-            this.listView.SelectedIndexChanged += new System.EventHandler(this.OnSelectedIndexChanged);
+            this.listView1.Location = new System.Drawing.Point(48, 12);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(232, 229);
+            this.listView1.TabIndex = 1;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            
+            this.listView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
             // 
-            // MainForm
+            // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1300, 700);
-            this.Controls.Add(this.pluginViewCtrl);
-            this.Name = "MainForm";
+            this.Controls.Add(this.pluginViewCtrl1);
+            this.Name = "View";
             this.Text = "Interface";
-            this.pluginViewCtrl.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pluginViewCtrl)).EndInit();
-            this.pluginViewCtrl.ResumeLayout(false);
+            this.pluginViewCtrl1.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pluginViewCtrl1)).EndInit();
+            this.pluginViewCtrl1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
         #endregion
 
-        private Pic.Plugin.ViewCtrl.PluginViewCtrl pluginViewCtrl;
-        private System.Windows.Forms.ListView listView;
+        private Pic.Plugin.ViewCtrl.PluginViewCtrl pluginViewCtrl1;
+        private System.Windows.Forms.ListView listView1;
     }
 }
