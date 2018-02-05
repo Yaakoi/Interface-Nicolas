@@ -20,11 +20,6 @@ namespace Interface_Nicolas
             ComponentListView();
         }
 
-        public void LoadComponent(Component comp)
-        {
-           pluginViewCtrl.Component = comp;
-        }
-
         public void ComponentListView()
         {
             try
@@ -56,7 +51,7 @@ namespace Interface_Nicolas
             {
                 string searchedComp = listView.SelectedItems[0].Text;
                 pluginViewCtrl.SearchMethod = ComponentSearchXMLFile.Instance;
-                pluginViewCtrl.PluginPath = ComponentSearchXMLFile.Instance.GetComponentPathFromName(listView.SelectedItems[0].Text);
+                pluginViewCtrl.PluginPath = ComponentSearchXMLFile.Instance.GetComponentPathFromName(searchedComp);
             }
             catch (Exception ex)
             {
@@ -65,5 +60,31 @@ namespace Interface_Nicolas
         }
 
         protected static ILog _log = LogManager.GetLogger(typeof(MainForm));
+
+        private void propriétésToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                PropertiesForm propForm = new PropertiesForm(pluginViewCtrl);
+                propForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.ToString());
+            }
+
+        }
+
+        private void symetrieXToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pluginViewCtrl.ReflectionX = !pluginViewCtrl.ReflectionX;
+            pluginViewCtrl.Refresh();
+        }
+
+        private void symetrieYToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pluginViewCtrl.ReflectionY = !pluginViewCtrl.ReflectionY;
+            pluginViewCtrl.Refresh();
+        }
     }
 }
