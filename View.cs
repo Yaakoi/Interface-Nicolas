@@ -59,6 +59,7 @@ namespace Interface_Nicolas
             }
         }
 
+
         protected static ILog _log = LogManager.GetLogger(typeof(MainForm));
 
         private void propriétésToolStripMenuItem1_Click(object sender, EventArgs e)
