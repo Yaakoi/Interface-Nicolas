@@ -6,6 +6,7 @@ using Pic.Plugin;
 using System.Xml;
 
 using log4net;
+using Pic.Factory2D;
 
 namespace Interface_Nicolas
 {
@@ -14,7 +15,7 @@ namespace Interface_Nicolas
         public MainForm()
         {
             ComponentSearchXMLFile.XmlFilePath = Properties.Settings.Default.XmlFilePath;
-
+            
             InitializeComponent();
 
             ComponentListView();
@@ -52,6 +53,7 @@ namespace Interface_Nicolas
                 string searchedComp = listView.SelectedItems[0].Text;
                 pluginViewCtrl.SearchMethod = ComponentSearchXMLFile.Instance;
                 pluginViewCtrl.PluginPath = ComponentSearchXMLFile.Instance.GetComponentPathFromName(searchedComp);
+                pluginViewCtrl.ProfileLoader = new LoadProfile();
             }
             catch (Exception ex)
             {
@@ -60,13 +62,15 @@ namespace Interface_Nicolas
         }
 
 
-        protected static ILog _log = LogManager.GetLogger(typeof(MainForm));
+        
 
         private void propriétésToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             try
             {
+                
                 PropertiesForm propForm = new PropertiesForm(pluginViewCtrl);
+               
                 propForm.ShowDialog();
             }
             catch (Exception ex)
@@ -87,5 +91,22 @@ namespace Interface_Nicolas
             pluginViewCtrl.ReflectionY = !pluginViewCtrl.ReflectionY;
             pluginViewCtrl.Refresh();
         }
+
+        private void profilsCartonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                EditProfilesForm profilesForm = new EditProfilesForm(pluginViewCtrl);
+
+                profilesForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.ToString());
+            }
+
+        }
+        protected static ILog _log = LogManager.GetLogger(typeof(MainForm));
     }
 }

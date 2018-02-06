@@ -109,4 +109,35 @@
       <xs:attribute name="ComponentDirPath" type="xs:string"/>
     </xs:complexType>
   </xs:element>
+  <!-- Profile list -->
+  <xs:element name="profileList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name ="profiles" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="code" type="xs:string"/>
+            <xs:attribute name="thickness" type="xs:string"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- Majoration Set -->
+  <xs:element name="MajorationSet">
+    <xs:complexType>
+        <xs:attribute name="codeProfile" type="xs:string"/>
+        <xs:attribute name="codeComponent" type="xs:string"/>
+        <xs:attribute name="m1" type="xs:double"/>
+        <xs:attribute name="m2" type="xs:double"/>
+        <xs:attribute name="m3" type="xs:double"/>
+        <xs:attribute name="m4" type="xs:double"/>
+        <xs:attribute name="m5" type="xs:double"/>
+        <xs:attribute name="m6" type="xs:double"/>
+        <xs:attribute name="m7" type="xs:double"/>
+        <xs:attribute name="m8" type="xs:double"/>
+        <xs:attribute name="m9" type="xs:double"/>
+        <xs:attribute name="m10" type="xs:double"/>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -33,10 +33,11 @@
             this.spécialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spécialToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.propriétésToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.propriétésToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.symetrieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.symetrieXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.symetrieYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.propriétésToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.profilsCartonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pluginViewCtrl)).BeginInit();
             this.pluginViewCtrl.Panel1.SuspendLayout();
             this.pluginViewCtrl.SuspendLayout();
@@ -88,7 +89,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.spécialToolStripMenuItem,
             this.spécialToolStripMenuItem1,
-            this.symetrieToolStripMenuItem});
+            this.symetrieToolStripMenuItem,
+            this.profilsCartonToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1050, 24);
@@ -115,12 +117,6 @@
             this.propriétésToolStripMenuItem1.Text = "Propriétés";
             this.propriétésToolStripMenuItem1.Click += new System.EventHandler(this.propriétésToolStripMenuItem1_Click);
             // 
-            // propriétésToolStripMenuItem
-            // 
-            this.propriétésToolStripMenuItem.Name = "propriétésToolStripMenuItem";
-            this.propriétésToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.propriétésToolStripMenuItem.Text = "Propriétés";
-            // 
             // symetrieToolStripMenuItem
             // 
             this.symetrieToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -133,16 +129,29 @@
             // symetrieXToolStripMenuItem
             // 
             this.symetrieXToolStripMenuItem.Name = "symetrieXToolStripMenuItem";
-            this.symetrieXToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.symetrieXToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.symetrieXToolStripMenuItem.Text = "Symetrie X";
             this.symetrieXToolStripMenuItem.Click += new System.EventHandler(this.symetrieXToolStripMenuItem_Click);
             // 
             // symetrieYToolStripMenuItem
             // 
             this.symetrieYToolStripMenuItem.Name = "symetrieYToolStripMenuItem";
-            this.symetrieYToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.symetrieYToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.symetrieYToolStripMenuItem.Text = "Symetrie Y";
             this.symetrieYToolStripMenuItem.Click += new System.EventHandler(this.symetrieYToolStripMenuItem_Click);
+            // 
+            // propriétésToolStripMenuItem
+            // 
+            this.propriétésToolStripMenuItem.Name = "propriétésToolStripMenuItem";
+            this.propriétésToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.propriétésToolStripMenuItem.Text = "Propriétés";
+            // 
+            // profilsCartonToolStripMenuItem
+            // 
+            this.profilsCartonToolStripMenuItem.Name = "profilsCartonToolStripMenuItem";
+            this.profilsCartonToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+            this.profilsCartonToolStripMenuItem.Text = "Profils Carton";
+            this.profilsCartonToolStripMenuItem.Click += new System.EventHandler(this.profilsCartonToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -174,5 +183,6 @@
         private System.Windows.Forms.ToolStripMenuItem symetrieToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem symetrieXToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem symetrieYToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem profilsCartonToolStripMenuItem;
     }
 }

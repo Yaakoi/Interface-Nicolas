@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Profiles>
+  <type name="1 - E - (micro)">
+    <Code>E</Code>
+    <thickness>1.5</thickness>
+    <DoubleWall>3</DoubleWall>
+  </type>
+  <type name="2 - B - (pc)">
+    <Code>B</Code>
+    <thickness>3</thickness>
+    <DoubleWall>6</DoubleWall>
+  </type>
+</Profiles>

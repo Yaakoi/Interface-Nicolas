@@ -3,6 +3,7 @@ using log4net;
 using log4net.Config;
 
 using System.Diagnostics;
+using System;
 
 namespace Interface_Nicolas
 {
@@ -17,6 +18,9 @@ namespace Interface_Nicolas
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            
+
+
             Application.Run(new MainForm());
         }
     }
