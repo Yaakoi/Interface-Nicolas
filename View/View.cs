@@ -37,7 +37,7 @@ namespace Interface_Nicolas
                 // Width of -2 indicates auto-size.
                 listView.Columns.Add("FEFCO", -2, HorizontalAlignment.Left);
                 //fill the list of items with component from xml file
-                foreach (component comp in ComponentSearchXMLFile.Instance.ComponentList)
+                foreach (componentListComponents comp in ComponentSearchXMLFile.Instance.ComponentList)
                 { listView.Items.Add(new ListViewItem(comp.name)); }
             }
             catch (Exception ex)
@@ -53,7 +53,7 @@ namespace Interface_Nicolas
                 string searchedComp = listView.SelectedItems[0].Text;
                 pluginViewCtrl.SearchMethod = ComponentSearchXMLFile.Instance;
                 pluginViewCtrl.PluginPath = ComponentSearchXMLFile.Instance.GetComponentPathFromName(searchedComp);
-                pluginViewCtrl.ProfileLoader = new LoadProfile();
+                
             }
             catch (Exception ex)
             {
@@ -108,5 +108,7 @@ namespace Interface_Nicolas
 
         }
         protected static ILog _log = LogManager.GetLogger(typeof(MainForm));
+
+       
     }
 }

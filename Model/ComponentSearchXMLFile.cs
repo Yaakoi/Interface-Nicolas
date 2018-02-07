@@ -21,11 +21,11 @@ namespace Interface_Nicolas
         #endregion
 
         #region IComponentSearchMethod
-        public List<component> ComponentList => _listComponent;
+        public List<componentListComponents> ComponentList => _listComponent;
 
         public byte[] GetAssemblyBytesFromGuid(Guid guid)
         {
-            component cp = _listComponent.Find(c => Guid.Parse(c.guid) == guid);
+            componentListComponents cp = _listComponent.Find(c => Guid.Parse(c.guid) == guid);
             if (null == cp)
                 throw new Exception($"Failed to retrieve component with guid = {guid}");
 
@@ -44,7 +44,7 @@ namespace Interface_Nicolas
 
         public bool GetBoolParameterDefaultValue(Guid guid, string name)
         {
-            component cp = _listComponent.Find(c => Guid.Parse(c.guid) == guid);
+            componentListComponents cp = _listComponent.Find(c => Guid.Parse(c.guid) == guid);
             parameter param = cp.paramDefaults.Find(p => p.name == name);
             if (param is parameterBool paramBool)
                 return paramBool.value;
@@ -54,7 +54,7 @@ namespace Interface_Nicolas
 
         public double GetDoubleParameterDefaultValue(Guid guid, string name)
         {
-            component cp = _listComponent.Find(c => Guid.Parse(c.guid) == guid);
+            componentListComponents cp = _listComponent.Find(c => Guid.Parse(c.guid) == guid);
             parameter param = cp.paramDefaults.Find(p => p.name == name);
             if (param is parameterDouble paramDouble)
                 return paramDouble.value;
@@ -64,7 +64,7 @@ namespace Interface_Nicolas
 
         public int GetIntParameterDefaultValue(Guid guid, string name)
         {
-            component cp = _listComponent.Find(c => Guid.Parse(c.guid) == guid);
+            componentListComponents cp = _listComponent.Find(c => Guid.Parse(c.guid) == guid);
             parameter param = cp.paramDefaults.Find(p => p.name == name);
             if (param is parameterInt paramInt)
                 return paramInt.value;
@@ -74,7 +74,7 @@ namespace Interface_Nicolas
 
         public int GetMultiParameterDefaultValue(Guid guid, string name)
         {
-            component cp = _listComponent.Find(c => Guid.Parse(c.guid) == guid);
+            componentListComponents cp = _listComponent.Find(c => Guid.Parse(c.guid) == guid);
             parameter param = cp.paramDefaults.Find(p => p.name == name);
             if (param is parameterInt paramInt)
                 return paramInt.value;
@@ -88,7 +88,7 @@ namespace Interface_Nicolas
         {
             try
             {
-                component cp = _listComponent.Find(c => c.name == name);
+                componentListComponents cp = _listComponent.Find(c => c.name == name);
                 return Guid.Parse(cp.guid);
             }
             catch (Exception /*ex*/)
@@ -98,7 +98,7 @@ namespace Interface_Nicolas
         }
         public string GetComponentPathFromName(string name)
         {
-            component cp = _listComponent.Find(c => c.name == name);
+            componentListComponents cp = _listComponent.Find(c => c.name == name);
             return Path.Combine(LibraryPath, cp.fileName.Replace('-', '_'));
         }
 
@@ -132,7 +132,7 @@ namespace Interface_Nicolas
         #endregion
 
         #region Data members
-        private List<component> _listComponent;
+        private List<componentListComponents> _listComponent;
         #endregion
     }
 }
