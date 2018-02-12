@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\ComponentSearchXMLFile.cs" />
+    <Compile Include="Model\ProfileSearchXMLFile.cs" />
     <Compile Include="View\EditProfilesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,7 +127,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model\ProfileData.xml" />
+    <Content Include="Model\CompMajoByProfil.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Model\ProfileData.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controller\" />

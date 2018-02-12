@@ -20,6 +20,7 @@ namespace Interface_Nicolas
         PluginViewCtrl _pluginViewCtrl;
         public EditProfilesForm(PluginViewCtrl pluginViewCtrl)
         {
+            ProfileSearchXMLFile.XmlFilePath = @"C:\Users\nmoreau\Documents\Projet\Interface-Nicolas\Model\ProfileData.xml";
             InitializeComponent();
 
             _pluginViewCtrl = pluginViewCtrl;
@@ -35,19 +36,10 @@ namespace Interface_Nicolas
                 profileListView.GridLines = true;
                 profileListView.Sorting = SortOrder.Ascending;
                 profileListView.Columns.Add("Profils", -2, HorizontalAlignment.Left);
-                
-                XmlTextReader reader = new XmlTextReader("ProfileData.xml");
-                while (reader.Read())
-                {
-                    if (reader.NodeType == XmlNodeType.Element)
-                    {
-                        if (reader.Name.Equals("type"))
-                        {
-                            profileListView.Items.Add(new ListViewItem(reader.GetAttribute("name")));
-                        }
-                    }
-                }
-                
+
+                foreach (profileListProfile prof in ProfileSearchXMLFile.Instance.ProfileList)
+                { profileListView.Items.Add(new ListViewItem(prof.name)); }
+
 
             }
 
@@ -57,6 +49,21 @@ namespace Interface_Nicolas
             }
         }
 
+        //Bouton "Sélectionner"
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+         
+                
+        }
+
+        //Bouton "Annuler"
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         protected static ILog _log = LogManager.GetLogger(typeof(MainForm));
+
     }
 }

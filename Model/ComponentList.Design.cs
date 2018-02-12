@@ -2176,7 +2176,7 @@ namespace Interface_Nicolas
 
         private string _name;
 
-        private string _code;
+        private int _id;
 
         private static XmlSerializer serializer;
         #endregion
@@ -2219,15 +2219,15 @@ namespace Interface_Nicolas
         }
 
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string code
+        public int id
         {
             get
             {
-                return this._code;
+                return this._id;
             }
             set
             {
-                this._code = value;
+                this._id = value;
             }
         }
 

@@ -38,7 +38,10 @@ namespace Interface_Nicolas
                 listView.Columns.Add("FEFCO", -2, HorizontalAlignment.Left);
                 //fill the list of items with component from xml file
                 foreach (componentListComponents comp in ComponentSearchXMLFile.Instance.ComponentList)
-                { listView.Items.Add(new ListViewItem(comp.name)); }
+                {
+                    if(comp.name.StartsWith("F_"))
+                    listView.Items.Add(new ListViewItem(comp.name));
+                }
             }
             catch (Exception ex)
             {
@@ -46,6 +49,7 @@ namespace Interface_Nicolas
             }
         }
 
+        //Sélection des modèles
         private void OnSelectedIndexChanged(object sender, EventArgs e)
         {
             try
