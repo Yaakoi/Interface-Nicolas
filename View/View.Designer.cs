@@ -1,4 +1,6 @@
-﻿namespace Interface_Nicolas
+﻿using System.Windows.Forms;
+
+namespace Interface_Nicolas
 {
     partial class MainForm
     {
@@ -43,21 +45,24 @@
             this.pluginViewCtrl.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
+            this.ClientSize = new System.Drawing.Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+
+
+            this.Controls.Add(this.listView);
+            this.Controls.Add(this.menuStrip1);
             // 
             // pluginViewCtrl
             // 
             this.pluginViewCtrl.CloseButtonVisible = false;
             this.pluginViewCtrl.Component = null;
-            this.pluginViewCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pluginViewCtrl.Dock = System.Windows.Forms.DockStyle.Right;
             this.pluginViewCtrl.HasDependancies = false;
             this.pluginViewCtrl.Localizer = null;
-            this.pluginViewCtrl.Location = new System.Drawing.Point(0, 0);
+            this.pluginViewCtrl.Panel1.Location = new System.Drawing.Point(listView.Width, 200);
             this.pluginViewCtrl.Name = "pluginViewCtrl";
-            // 
-            // pluginViewCtrl.Panel1
-            // 
-            this.pluginViewCtrl.Panel1.Controls.Add(this.listView);
-            this.pluginViewCtrl.Panel1.Controls.Add(this.menuStrip1);
+            
+            
+          
             // 
             // pluginViewCtrl.Panel2
             // 
@@ -69,7 +74,7 @@
             this.pluginViewCtrl.ShowCotationsAuto = true;
             this.pluginViewCtrl.ShowCotationsCode = false;
             this.pluginViewCtrl.ShowSummary = true;
-            this.pluginViewCtrl.Size = new System.Drawing.Size(1300, 700);
+            this.pluginViewCtrl.Size = new System.Drawing.Size(this.ClientSize.Width - listView.Width-200, Screen.PrimaryScreen.Bounds.Height - menuStrip1.Height);
             this.pluginViewCtrl.SplitterDistance = 1050;
             this.pluginViewCtrl.SplitterWidth = 1;
             this.pluginViewCtrl.TabIndex = 0;
@@ -82,7 +87,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.listView.Location = new System.Drawing.Point(3, 27);
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(150, 658);
+            this.listView.Size = new System.Drawing.Size(150, Screen.PrimaryScreen.Bounds.Height-menuStrip1.Height);
             this.listView.TabIndex = 1;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.SelectedIndexChanged += new System.EventHandler(this.OnSelectedIndexChanged);
@@ -96,7 +101,7 @@
             this.profilsCartonToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1050, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(Screen.PrimaryScreen.Bounds.Width, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -160,7 +165,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1300, 700);
+            
             this.Controls.Add(this.pluginViewCtrl);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";

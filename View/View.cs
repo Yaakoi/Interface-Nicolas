@@ -17,7 +17,7 @@ namespace Interface_Nicolas
             ComponentSearchXMLFile.XmlFilePath = Properties.Settings.Default.XmlFilePath;
             
             InitializeComponent();
-
+            
             ComponentListView();
         }
 

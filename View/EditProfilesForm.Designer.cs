@@ -41,7 +41,7 @@
             this.profileListView.TabIndex = 0;
             this.profileListView.UseCompatibleStateImageBehavior = false;
             // 
-            // button1 : Sélectionner
+            // button1
             // 
             this.button1.Location = new System.Drawing.Point(197, 197);
             this.button1.Name = "button1";
@@ -49,8 +49,9 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "Sélectionner";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // button2 : Annuler
+            // button2
             // 
             this.button2.Location = new System.Drawing.Point(197, 226);
             this.button2.Name = "button2";

@@ -4,32 +4,31 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml;
 
-namespace Interface_Nicolas
+namespace Interface_Nicolas.Model
 {
-    class ProfileSearchXMLFile
+    class MajoSearchXMLFile
     {
-        private List<profileListProfile> _listProfile;
+        private List<MajoSetsFefco> _listMajoSets;
 
-        private static ProfileSearchXMLFile _instance;
+        private static MajoSearchXMLFile _instance;
         private static string _xmlFilePath;
 
-        private ProfileSearchXMLFile(string filePath)
+        private MajoSearchXMLFile(string filePath)
         {
-            profileList lProfile = profileList.LoadFromFile(filePath);
-            _listProfile = lProfile.profile.OrderBy(o => o.name).ToList();
+            MajoSets lMajo = MajoSets.LoadFromFile(filePath);
+            _listMajoSets = lMajo.fefco.OrderBy(o => o.modele).ToList();
         }
 
-        public List<profileListProfile> ProfileList => _listProfile;
+        public List<MajoSetsFefco> MajoSet => _listMajoSets;
 
-        public string getIdFromName(string name)
+        public MajoSetsFefco getMajo(string modele, string profilCarton)
         {
             try
             {
-                profileListProfile cp = _listProfile.Find(c => c.name == name);
-                return cp.code;
+                MajoSetsFefco cp = _listMajoSets.Find(c => (c.modele == modele) && (c.profilCarton == profilCarton));
+               
+                return cp;
             }
             catch (Exception /*ex*/)
             {
@@ -37,12 +36,12 @@ namespace Interface_Nicolas
             }
         }
 
-        public static ProfileSearchXMLFile Instance
+        public static MajoSearchXMLFile Instance
         {
             get
             {
                 if (null == _instance)
-                    _instance = new ProfileSearchXMLFile(_xmlFilePath);
+                    _instance = new MajoSearchXMLFile(_xmlFilePath);
                 return _instance;
             }
         }
